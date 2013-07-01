@@ -21,6 +21,7 @@ function Ship.new(color, position, speed)
   self.speed = speed or 3
   self.window = {x=grph.getWidth(), y=grph.getHeight()}
   self.position = Position({x=0, y=0}, self.window)
+  self.image = grph.newImage('img/fighter2.png')
   return self
 end
 
@@ -75,7 +76,7 @@ end
 function Ship.draw(self)
   local oldColor = {grph.getColor()}
   grph.setColor(self.color)
-  grph.circle('fill', self.position.x, self.position.y, 5)
+  grph.draw(self.image, self.position.x, self.position.y)
   grph.setColor(oldColor)
 end
 
