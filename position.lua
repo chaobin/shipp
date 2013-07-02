@@ -24,29 +24,31 @@ function Position.new(xy, XY)
 end
 
 function Position.moveX(self, distance)
-  if distance > 0 then -- moving to right
-    if (self.x < self.X) then
-      self.x = self.x + distance
-    end
-  end
-  if distance < 0 then -- moving to left
-    if (self.x > 0) then
-      self.x = self.x + distance
-    end
-  end
+  self:setX(self.x + distance)
 end
 
 function Position.moveY(self, distance)
-  if distance > 0 then -- moving down
-    if (self.y < self.Y) then
-      self.y = self.y + distance
-    end
+  self:setY(self.y + distance)
+end
+
+function Position.setX(self, x)
+  -- param x: the new position on x axis
+  if x <= 0 then
+    x = 0
+  elseif x >= self.X then
+    x = self.X
   end
-  if distance < 0 then -- moving up
-    if (self.y > 0) then
-      self.y = self.y + distance
-    end
+  self.x = x
+end
+
+function Position.setY(self, y)
+  -- param y: the new position on y axis
+  if y <= 0 then
+    y = 0
+  elseif y >= self.Y then
+    y = self.Y
   end
+  self.y = y
 end
 
 return Position

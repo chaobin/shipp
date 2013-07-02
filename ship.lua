@@ -1,6 +1,7 @@
 -- imported names
 local grph = love.graphics
 local Position = require "position"
+local color = require "color"
 
 --
 -- A class represents a Ship
@@ -17,11 +18,19 @@ setmetatable(Ship, {
 
 function Ship.new(color, position, speed)
   local self = setmetatable({}, Ship)
+  self.image = grph.newImage('img/fighter3.png')
   self.color = color or {255, 246, 117}
   self.speed = speed or 3
   self.window = {x=grph.getWidth(), y=grph.getHeight()}
-  self.position = Position({x=0, y=0}, self.window)
-  self.image = grph.newImage('img/fighter4.png')
+  self.size = {
+    w = self.image:getWidth(),
+    h = self.image:getHeight()
+  }
+  self.boundaries = {
+    x = (self.window.x - self.size.w / 2),
+    y = (self.window.y - self.size.h / 2)
+  }
+  self.position = Position({x=0, y=0}, self.boundaries)
   return self
 end
 
@@ -56,7 +65,7 @@ function Ship.slowdown(self)
   end
 end
 
-function Ship.moveOnArrowKeyDown(self)
+function Ship.moveByKeys(self)
   local keydown = love.keyboard.isDown
   if keydown("up") then self:moveUp() end
   if keydown("down") then self:moveDown() end
@@ -65,7 +74,6 @@ function Ship.moveOnArrowKeyDown(self)
 end
 
 function Ship.listenToKeys(self)
-  self:moveOnArrowKeyDown()
 end
 
 function Ship.listenToPressedKeys(self, key)
@@ -73,9 +81,16 @@ function Ship.listenToPressedKeys(self, key)
   if key == 's' then self:slowdown() end
 end
 
+function Ship.moveByMouse(self)
+  local mouse = love.mouse
+  mouse.setVisible(false)
+  self.position:setX(mouse.getX())
+  self.position:setY(mouse.getY())
+end
+
 function Ship.draw(self)
   local oldColor = {grph.getColor()}
-  grph.setColor(self.color)
+  grph.setColor(color.white)
   grph.draw(self.image, self.position.x, self.position.y, 0, 0.5, 0.5)
   grph.setColor(oldColor)
 end

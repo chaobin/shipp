@@ -2,6 +2,8 @@ local Ship = require "ship"
 -- placeholder for all settings
 local settings = {}
 
+settings.controller = 'mouse'
+
 -- sub placeholder for colors
 settings.color = require "color"
 
@@ -30,7 +32,11 @@ function love.draw()
 end
 
 function love.update()
-  ship:listenToKeys()
+  if settings.controller == 'mouse' then
+    ship:moveByMouse()
+  elseif settings.controller == 'keyboard' then
+    ship:moveByKeys()
+  end
 end
 
 function love.keypressed(key, unicode)
