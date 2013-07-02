@@ -22,6 +22,7 @@ function Background.new(options)
   self.x, self.y = 0, 0
   self.window = {x=grph.getWidth(), y=grph.getHeight()}
   self.y2 = - (self.window.y)
+  self.speed = options.speed or 0.5
   return self
 end
 
@@ -39,8 +40,8 @@ function Background.roll(self)
   if self.y2 > self.window.y then -- the replacement also rolled out
     self.y2 = - (self.window.y)
   end
-  self.y = (self.y + 1)
-  self.y2 = (self.y2 + 1)
+  self.y = (self.y + self.speed)
+  self.y2 = (self.y2 + self.speed)
 end
 
 function Background.update(self, time)

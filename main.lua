@@ -21,10 +21,15 @@ function love.load()
   local font = settings.font
 
   bg = Background({
-    img = 'img/tristar.png'
+    img = 'img/tristar.png',
+    speed = 0.5
   })
 
-  ship = Ship()
+  ship = Ship({
+    imgs = {
+      image = 'img/spaceride.png'
+    }
+  })
 
   grph.setBackgroundColor(color.black)
   grph.setColor(color.blue)
@@ -34,13 +39,22 @@ end
 function love.draw()
   local grph = love.graphics
 
-  bg:draw()
-  ship:draw()
+  do -- update frame
+    local oldColor = {grph.getColor()}
+    grph.setColor(settings.color.white)
+    bg:draw()
+    ship:draw()
+    grph.setColor(oldColor)
+  end
 
-  grph.print(string.format("ship speed: " .. ship.speed), 0, 0)
-  grph.print("ship position: " .. ship.position.x .. ', ' .. ship.position.y, 0, 16)
-  grph.print("ship scale: " .. ship.scale, 0, 32)
+  do -- print game stats
+    grph.print(string.format("ship speed: " .. ship.speed), 0, 0)
+    grph.print("ship position: " .. ship.position.x .. ', ' .. ship.position.y, 0, 16)
+    grph.print("ship scale: " .. ship.scale, 0, 32)
+    grph.print("frame/sec: " .. love.timer.getFPS(), 0, 48)
+  end
 end
+
 
 function love.update()
   time = love.timer.getTime()

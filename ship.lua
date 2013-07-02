@@ -16,14 +16,15 @@ setmetatable(Ship, {
   end
 })
 
-function Ship.new(img, position, speed)
+function Ship.new(options)
   local self = setmetatable({}, Ship)
   self.speedmin, self.speedmax = 5, 12
-  self.scalemin, self.scalemax = 0.4, 0.7
-  self.image = grph.newImage('img/spaceride.png')
-
-  self:setSpeed(speed)
-  self.scale = (self.scalemin + self.scalemax) / 2
+  self.scalemin, self.scalemax = 0.4, 0.6
+  
+  local imgs = options.imgs
+  self.image = grph.newImage(imgs.image)
+  self:setSpeed(options.speed)
+  self.scale = options.scale or ((self.scalemin + self.scalemax) / 2)
   self.window = {x=grph.getWidth(), y=grph.getHeight()}
   self.size = {
     w = self.image:getWidth(),
@@ -33,7 +34,7 @@ function Ship.new(img, position, speed)
     x = (self.window.x - self.size.w / 2),
     y = (self.window.y - self.size.h / 2)
   }
-  self.startPosition = {
+  self.startPosition = options.position or {
     x = math.random(self.boundaries.x),
     y = self.boundaries.y
   }
@@ -103,10 +104,7 @@ function Ship.listenToPressedKeys(self, key)
 end
 
 function Ship.draw(self)
-  local oldColor = {grph.getColor()}
-  grph.setColor(color.white)
   grph.draw(self.image, self.position.x, self.position.y, 0, self.scale, self.scale)
-  grph.setColor(oldColor)
 end
 
 return Ship
