@@ -2,7 +2,7 @@ local Ship = require "ship"
 -- placeholder for all settings
 local settings = {}
 
-settings.controller = 'mouse'
+settings.controller = 'keyboard'
 
 -- sub placeholder for colors
 settings.color = require "color"
@@ -29,6 +29,7 @@ function love.draw()
   ship:draw()
   grph.print(string.format("ship speed: " .. ship.speed), 0, 0)
   grph.print("ship position: " .. ship.position.x .. ', ' .. ship.position.y, 0, 16)
+  grph.print("ship scale: " .. ship.scale, 0, 32)
 end
 
 function love.update()
