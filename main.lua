@@ -69,3 +69,7 @@ end
 function love.keypressed(key, unicode)
   ship:listenToPressedKeys(key)
 end
+
+function love.keyreleased(key)
+  ship:listenToReleasedKeys(key)
+end

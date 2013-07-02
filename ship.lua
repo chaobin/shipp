@@ -20,11 +20,11 @@ function Ship.new(options)
   local self = setmetatable({}, Ship)
   self.speedmin, self.speedmax = 5, 12
   self.scalemin, self.scalemax = 0.4, 0.6
-  
-  local imgs = options.imgs
-  self.image = grph.newImage(imgs.image)
+  self.diversion = options.diversion or math.rad(8)
+  self.image = grph.newImage(options.imgs.image)
   self:setSpeed(options.speed)
   self.scale = options.scale or ((self.scalemin + self.scalemax) / 2)
+  self.direction = options.direction or 0
   self.window = {x=grph.getWidth(), y=grph.getHeight()}
   self.size = {
     w = self.image:getWidth(),
@@ -64,10 +64,12 @@ function Ship.moveUp(self)
 end
 
 function Ship.moveRight(self)
+  self.direction = self.diversion
   self.position:moveX(self.speed)
 end
 
 function Ship.moveLeft(self)
+  self.direction = math.rad(350)
   self.position:moveX(-(self.speed))
 end
 
@@ -97,14 +99,17 @@ function Ship.moveByKeys(self)
   if keydown("right") then self:moveRight() end
 end
 
-function Ship.listenToKeys(self)
+function Ship.listenToReleasedKeys(self, key)
+  if key == 'left' or key == 'right' then
+    self.direction = 0
+  end
 end
 
 function Ship.listenToPressedKeys(self, key)
 end
 
 function Ship.draw(self)
-  grph.draw(self.image, self.position.x, self.position.y, 0, self.scale, self.scale)
+  grph.draw(self.image, self.position.x, self.position.y, self.direction, self.scale, self.scale)
 end
 
 return Ship
