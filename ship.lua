@@ -16,16 +16,14 @@ setmetatable(Ship, {
   end
 })
 
-function Ship.new(color, position, speed)
+function Ship.new(img, position, speed)
   local self = setmetatable({}, Ship)
-  self.min, self.max = 3, 10
-  self.scalemin, self.scalemax = 0.4, 0.9
-  self.imageS = grph.newImage('img/fighter3.png')
-  self.imageX = grph.newImage('img/fighter1.png')
-  self.image = self.imageS
-  self.color = color or {255, 246, 117}
-  self.speed = speed or 3
-  self.scale = self.scalemin
+  self.speedmin, self.speedmax = 5, 12
+  self.scalemin, self.scalemax = 0.4, 0.7
+  self.image = grph.newImage('img/spaceride.png')
+
+  self:setSpeed(speed)
+  self.scale = (self.scalemin + self.scalemax) / 2
   self.window = {x=grph.getWidth(), y=grph.getHeight()}
   self.size = {
     w = self.image:getWidth(),
@@ -41,6 +39,16 @@ function Ship.new(color, position, speed)
   }
   self.position = Position(self.startPosition, self.boundaries)
   return self
+end
+
+function Ship.setSpeed(self, speed)
+  if (speed == 'fast') then
+    self.speed = self.speedmax
+  elseif (speed == 'slow') then
+    self.speed = self.speedmin
+  else
+    self.speed = (self.speedmin + self.speedmax) / 2
+  end
 end
 
 function Ship.moveDown(self)
@@ -63,27 +71,20 @@ function Ship.moveLeft(self)
 end
 
 function Ship.accelerate(self)
-  if (self.speed < self.max) then
-    self.speed = self.speed + 0.05
+  if (self.speed < self.speedmax) then
+    self.speed = self.speed + 0.07
   end
   if self.scale > self.scalemin then
-    print(self.scale, self.scalemax)
     self.scale = self.scale - 0.01
-  end
-  if self.speed > ( (self.min + self.max) / 2 ) then
-    self.image = self.imageX
   end
 end
 
 function Ship.slowdown(self)
-  if (self.speed > self.min) then
+  if (self.speed > self.speedmin) then
     self.speed = self.speed - 0.1
   end
-  if self.scale < self.scalemax then
+  if (self.scale < self.scalemax) then
     self.scale = self.scale + 0.01
-  end
-  if self.speed < ( (self.min + self.max) / 2 ) then
-    self.image = self.imageS
   end
 end
 
