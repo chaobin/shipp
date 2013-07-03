@@ -1,5 +1,6 @@
 -- imported names
 local Ship = require "ship"
+local Enemy = require "enemy"
 local Background = require "background"
 
 -- placeholder for all settings
@@ -30,6 +31,25 @@ function love.load()
       image = 'img/spaceride.png'
     }
   })
+  enemy = Enemy({
+    imgs = {
+      image = 'img/spaceride.png'
+    },
+    direction = math.rad(180),
+    position = {x=500, y=100},
+    scale = 0.2,
+    speed = 2
+  })
+  
+  enemy2 = Enemy({
+    imgs = {
+      image = 'img/spaceride.png'
+    },
+    direction = math.rad(180),
+    position = {x=300, y=80},
+    scale = 0.2,
+    speed = 1
+  })
 
   grph.setBackgroundColor(color.black)
   grph.setColor(color.blue)
@@ -44,6 +64,8 @@ function love.draw()
     grph.setColor(settings.color.white)
     bg:draw()
     ship:draw()
+    enemy:draw()
+    enemy2:draw()
     grph.setColor(oldColor)
   end
 
@@ -59,6 +81,8 @@ end
 function love.update()
   time = love.timer.getTime()
   bg:update(time)
+  enemy:move()
+  enemy2:move()
   if settings.controller == 'mouse' then
     ship:moveByMouse()
   elseif settings.controller == 'keyboard' then

@@ -12,12 +12,13 @@ Ship.__index = Ship
 -- by Ship()
 setmetatable(Ship, {
   __call = function (cls, ...)
-    return cls.new(...)
+    local self = setmetatable({}, cls)
+    self:_init(...)
+    return self
   end
 })
 
-function Ship.new(options)
-  local self = setmetatable({}, Ship)
+function Ship._init(self, options)
   self.speedmin, self.speedmax = 5, 12
   self.scalemin, self.scalemax = 0.4, 0.6
   self.diversion = options.diversion or math.rad(8)
@@ -39,7 +40,6 @@ function Ship.new(options)
     y = self.boundaries.y
   }
   self.position = Position(self.startPosition, self.boundaries)
-  return self
 end
 
 function Ship.setSpeed(self, speed)
