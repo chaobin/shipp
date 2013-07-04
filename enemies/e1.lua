@@ -20,7 +20,7 @@ function E1._init(self, options)
   local options = options or {}
   
   options.imgs = options.imgs or  {
-    image = 'img/spaceride.png'
+    image = 'img/e1_32.png'
   }
   options.speed = options.speed or 2
   
