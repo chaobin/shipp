@@ -1,7 +1,7 @@
 -- imported names
 local grph = love.graphics
 local Position = require "position"
-local color = require "color"
+local V = require "values"
 
 --
 -- A class represents a Ship
@@ -110,6 +110,10 @@ end
 
 function Ship.draw(self)
   grph.draw(self.image, self.position.x, self.position.y, self.direction, self.scale, self.scale)
+end
+
+function Ship.update(self, dt)
+  self:moveByKeys(dt)
 end
 
 return Ship

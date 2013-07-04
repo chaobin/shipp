@@ -1,59 +1,49 @@
 -- imported names
-local Ship = require "ship"
+local Alex = require "alex"
 local Enemy = require "enemy"
 local Background = require "background"
+local V = require "values"
 
--- placeholder for all settings
-local settings = {}
--- the internal clock
-
-settings.controller = 'keyboard'
-
--- sub placeholder for colors
-settings.color = require "color"
-
--- sub placeholder for fonts
-settings.font = {}
-settings.font.big = love.graphics.newFont(16)
 
 function love.load()
   local grph = love.graphics
-  local color = settings.color
-  local font = settings.font
 
   bg = Background({
     img = 'img/tristar.png',
     speed = 0.5
   })
 
-  ship = Ship({
+  player = Alex({
     imgs = {
       image = 'img/spaceride.png'
     }
   })
-  enemy = Enemy({
-    imgs = {
-      image = 'img/spaceride.png'
-    },
-    direction = math.rad(180),
-    position = {x=500, y=100},
-    scale = 0.2,
-    speed = 2
-  })
   
-  enemy2 = Enemy({
-    imgs = {
-      image = 'img/spaceride.png'
-    },
-    direction = math.rad(180),
-    position = {x=300, y=80},
-    scale = 0.2,
-    speed = 1
-  })
+  enemies = {
+    enemy = Enemy({
+      imgs = {
+        image = 'img/spaceride.png'
+      },
+      direction = V.down,
+      position = {x=500, y=100},
+      scale = 0.2,
+      speed = 2
+    }),
+  
+    enemy2 = Enemy({
+      imgs = {
+        image = 'img/spaceride.png'
+      },
+      direction = V.down,
+      position = {x=300, y=80},
+      scale = 0.2,
+      speed = 1
+    })
+  }
 
-  grph.setBackgroundColor(color.black)
-  grph.setColor(color.blue)
-  grph.setFont(font.big)
+  grph.setBackgroundColor(V.black)
+  grph.setColor(V.blue)
+  grph.setFont(V.fontbig)
 end
 
 function love.draw()
@@ -61,39 +51,36 @@ function love.draw()
 
   do -- update frame
     local oldColor = {grph.getColor()}
-    grph.setColor(settings.color.white)
+    grph.setColor(V.white)
     bg:draw()
-    ship:draw()
-    enemy:draw()
-    enemy2:draw()
+    player:draw()
+    for key, enemy in pairs(enemies) do
+      enemy:draw()
+    end
     grph.setColor(oldColor)
   end
 
   do -- print game stats
-    grph.print(string.format("ship speed: " .. ship.speed), 0, 0)
-    grph.print("ship position: " .. ship.position.x .. ', ' .. ship.position.y, 0, 16)
-    grph.print("ship scale: " .. ship.scale, 0, 32)
+    grph.print(string.format("ship speed: " .. player.speed), 0, 0)
+    grph.print("ship position: " .. player.position.x .. ', ' .. player.position.y, 0, 16)
+    grph.print("ship scale: " .. player.scale, 0, 32)
     grph.print("frame/sec: " .. love.timer.getFPS(), 0, 48)
   end
 end
 
 
-function love.update()
-  time = love.timer.getTime()
-  bg:update(time)
-  enemy:move()
-  enemy2:move()
-  if settings.controller == 'mouse' then
-    ship:moveByMouse()
-  elseif settings.controller == 'keyboard' then
-    ship:moveByKeys()
+function love.update(dt)
+  bg:update(dt)
+  for key, enemy in pairs(enemies) do
+    enemy:update(dt)
   end
+  player:update(dt)
 end
 
 function love.keypressed(key, unicode)
-  ship:listenToPressedKeys(key)
+  player:listenToPressedKeys(key)
 end
 
 function love.keyreleased(key)
-  ship:listenToReleasedKeys(key)
+  player:listenToReleasedKeys(key)
 end

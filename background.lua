@@ -8,22 +8,21 @@ Background.__index = Background
 
 setmetatable(Background, {
   __call = function(cls, ...)
-    return cls.new(...)
+    local self = setmetatable({}, cls)
+    self:_init(...)
+    return self
   end
 })
 
-function Background.new(options)
-  local self = setmetatable({}, Background)
-  
+function Background._init(self, options)
   local imgname = options.img
   self.image = grph.newImage(imgname)
   self.image2 = grph.newImage(imgname)
-  self.lastupdated = love.timer.getTime()
+  self.lastupdated = 0
   self.x, self.y = 0, 0
   self.window = {x=grph.getWidth(), y=grph.getHeight()}
   self.y2 = - (self.window.y)
   self.speed = options.speed or 0.5
-  return self
 end
 
 function Background.draw(self)
@@ -44,8 +43,10 @@ function Background.roll(self)
   self.y2 = (self.y2 + self.speed)
 end
 
-function Background.update(self, time)
-  if (time - self.lastupdated) > 1 then -- longer than 1 second
+function Background.update(self, dt)
+  self.lastupdated = self.lastupdated + dt
+  if self.lastupdated > 0.05 then -- longer than 50 miliseconds
+    self.lastupdated = self.lastupdated - 0.05
     self:roll()
   end
 end
