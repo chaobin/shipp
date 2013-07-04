@@ -1,5 +1,5 @@
 -- imported names
-local PlayerShip = require "player"
+local BasePlayer = require "players.base"
 
 --
 -- Alex Ship Class
@@ -7,7 +7,7 @@ local Alex = {}
 Alex.__index = Alex
 
 setmetatable(Alex, {
-  __index = PlayerShip,
+  __index = BasePlayer,
   __call = function (cls, ...)
     local self = setmetatable({}, cls)
     self:_init(...)
@@ -16,7 +16,7 @@ setmetatable(Alex, {
 })
 
 function Alex._init(self, options)
-  PlayerShip._init(self, options)
+  BasePlayer._init(self, options)
 end
 
 return Alex
