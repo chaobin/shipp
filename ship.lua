@@ -23,6 +23,7 @@ setmetatable(Ship, {
 
 function Ship._init(self, options)
   O._init(self, options)
+  -- speed, images, geometries
   self.speedmin, self.speedmax = 5, 12
   self.image = grph.newImage(options.imgs.image)
   self:setSpeed(options.speed)
@@ -37,11 +38,26 @@ function Ship._init(self, options)
     y = (self.window.y - self.size.h / 2)
   }
   self:calcRadius()
+  -- gameplays
+  self.hp = options.hp or 0
 end
 
 function Ship.calcRadius(self)
   -- rectangle shaped only
   self.rad = math.max(self.size.w, self.size.h) / 2
+end
+
+function Ship.calcCenter(self)
+  self.center = {
+    x = (self.position.x + self.size.w / 2),
+    y = (self.position.y + self.size.h / 2)
+  }
+  return self.center
+end
+
+function Ship.isHit(self)
+  -- Subclass should implement this
+  -- to simulate the damage
 end
 
 function Ship.setSpeed(self, speed)
@@ -82,8 +98,21 @@ function Ship.slowdown(self)
   end
 end
 
+function Ship.isDead(self)
+  return (self.hp <= 0)
+end
+
+function Ship.destroy(self)
+  -- Subclass should override this
+  -- to simulate the blaster
+end
+
 function Ship.draw(self)
-  grph.draw(self.image, self.position.x, self.position.y, self.direction)
+  if self:isDead() then
+    self:destroy()
+  else
+    grph.draw(self.image, self.position.x, self.position.y, self.direction)
+  end
 end
 
 function Ship.update(self, dt)

@@ -22,9 +22,17 @@ function Alex._init(self, options)
   options.imgs = options.imgs or {
     image = 'img/spaceride.png'
   }
-  
+  options.hp = options.hp or 10
   BasePlayer._init(self, options)
 end
 
+function Alex.isHit(self)
+  self.hp = self.hp - 1
+end
+
+function Alex.destroy(self)
+  self:calcCenter()
+  grph.circle("line", self.center.x, self.center.y, self.rad * 3, 100)
+end
 
 return Alex

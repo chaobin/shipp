@@ -6,7 +6,7 @@ local V = require "values"
 
 
 function love.load()
-  local grph = love.graphics
+  grph = love.graphics
 
   bg = Tristar()
   player = Alex()
@@ -46,7 +46,7 @@ function love.update(dt)
   for key, enemy in pairs(enemies) do
     enemy:update(dt)
     if player:collidesWith(enemy) then
-      print('bom bom')
+      player:isHit()
     end
   end
   player:update(dt)

@@ -24,6 +24,7 @@ function E1._init(self, options)
   }
   options.speed = options.speed or 2
   
+  options.hp = options.hp or 1
   BaseEnemy._init(self, options)
 end
 
