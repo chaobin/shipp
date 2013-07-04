@@ -1,6 +1,6 @@
 -- imported names
-local Alex = require "alex"
-local Enemy = require "enemy"
+local Alex = require "players.alex"
+local E1 = require "enemies.e1"
 local Background = require "background"
 local V = require "values"
 
@@ -20,7 +20,7 @@ function love.load()
   })
   
   enemies = {
-    enemy = Enemy({
+    enemy = E1({
       imgs = {
         image = 'img/spaceride.png'
       },
@@ -30,7 +30,7 @@ function love.load()
       speed = 2
     }),
   
-    enemy2 = Enemy({
+    enemy2 = E1({
       imgs = {
         image = 'img/spaceride.png'
       },
