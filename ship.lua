@@ -24,12 +24,9 @@ setmetatable(Ship, {
 function Ship._init(self, options)
   O._init(self, options)
   self.speedmin, self.speedmax = 5, 12
-  self.scalemin, self.scalemax = 0.4, 0.6
-  self.diversion = options.diversion or math.rad(8)
   self.image = grph.newImage(options.imgs.image)
   self:setSpeed(options.speed)
-  self.scale = options.scale or ((self.scalemin + self.scalemax) / 2)
-  self.direction = options.direction or 0
+  self.direction = options.direction or V.up
   self.window = {x=grph.getWidth(), y=grph.getHeight()}
   self.size = {
     w = self.image:getWidth(),
@@ -39,6 +36,12 @@ function Ship._init(self, options)
     x = (self.window.x - self.size.w / 2),
     y = (self.window.y - self.size.h / 2)
   }
+  self:calcRadius()
+end
+
+function Ship.calcRadius(self)
+  -- rectangle shaped only
+  self.rad = math.max(self.size.w, self.size.h) / 2
 end
 
 function Ship.setSpeed(self, speed)
@@ -52,23 +55,18 @@ function Ship.setSpeed(self, speed)
 end
 
 function Ship.moveDown(self)
-  -- returns a new position
-  self:slowdown()
   self.position:moveY(self.speed)
 end
 
 function Ship.moveUp(self)
-  self:accelerate()
   self.position:moveY(-(self.speed))
 end
 
 function Ship.moveRight(self)
-  self.direction = self.diversion
   self.position:moveX(self.speed)
 end
 
 function Ship.moveLeft(self)
-  self.direction = math.rad(350)
   self.position:moveX(-(self.speed))
 end
 
@@ -76,26 +74,19 @@ function Ship.accelerate(self)
   if (self.speed < self.speedmax) then
     self.speed = self.speed + 0.07
   end
-  if self.scale > self.scalemin then
-    self.scale = self.scale - 0.01
-  end
 end
 
 function Ship.slowdown(self)
   if (self.speed > self.speedmin) then
     self.speed = self.speed - 0.1
   end
-  if (self.scale < self.scalemax) then
-    self.scale = self.scale + 0.01
-  end
 end
 
 function Ship.draw(self)
-  grph.draw(self.image, self.position.x, self.position.y, self.direction, self.scale, self.scale)
+  grph.draw(self.image, self.position.x, self.position.y, self.direction)
 end
 
 function Ship.update(self, dt)
-  self:moveByKeys(dt)
 end
 
 return Ship

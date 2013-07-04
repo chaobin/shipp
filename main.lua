@@ -36,7 +36,6 @@ function love.draw()
   do -- print game stats
     grph.print(string.format("ship speed: " .. player.speed), 0, 0)
     grph.print("ship position: " .. player.position.x .. ', ' .. player.position.y, 0, 16)
-    grph.print("ship scale: " .. player.scale, 0, 32)
     grph.print("frame/sec: " .. love.timer.getFPS(), 0, 48)
   end
 end
@@ -46,6 +45,9 @@ function love.update(dt)
   bg:update(dt)
   for key, enemy in pairs(enemies) do
     enemy:update(dt)
+    if player:collidesWith(enemy) then
+      print('bom bom')
+    end
   end
   player:update(dt)
 end

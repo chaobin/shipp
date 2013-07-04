@@ -22,8 +22,6 @@ function E1._init(self, options)
   options.imgs = options.imgs or  {
     image = 'img/spaceride.png'
   }
-  options.direction = options.direction or V.down
-  options.scale = options.scale or 0.2
   options.speed = options.speed or 2
   
   BaseEnemy._init(self, options)

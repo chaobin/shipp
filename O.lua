@@ -25,4 +25,11 @@ function O.mergeOptions(self, first, second)
   return results
 end
 
+function O.collidesWith(self, body)
+  local dx = body.position.x - self.position.x
+  local dy = body.position.y - self.position.y
+  local dis = math.sqrt(dx * dx + dy * dy)
+  return dis < (self.rad + body.rad)
+end
+
 return O

@@ -18,8 +18,31 @@ setmetatable(PlayerShip, {
 })
 
 function PlayerShip._init(self, options)
-  Ship._init(self, options)
+  self._base = Ship
+  self._base._init(self, options)
+  self.diversion = options.diversion or math.rad(8)
   self:calcStartPosition(options.position)
+end
+
+function PlayerShip.moveDown(self)
+  -- returns a new position
+  self:slowdown()
+  self._base.moveDown(self)
+end
+
+function PlayerShip.moveUp(self)
+  self:accelerate()
+  self._base.moveUp(self)
+end
+
+function PlayerShip.moveRight(self)
+  self.direction = self.diversion
+  self._base.moveRight(self)
+end
+
+function PlayerShip.moveLeft(self)
+  self.direction = math.rad(350)
+  self._base.moveLeft(self)
 end
 
 function PlayerShip.calcStartPosition(self, position)
@@ -45,6 +68,10 @@ function PlayerShip.listenToReleasedKeys(self, key)
 end
 
 function PlayerShip.listenToPressedKeys(self, key)
+end
+
+function PlayerShip.update(self, dt)
+  self:moveByKeys()
 end
 
 return PlayerShip
