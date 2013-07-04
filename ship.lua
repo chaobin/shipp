@@ -1,5 +1,7 @@
 -- imported names
 local grph = love.graphics
+
+local O = require "O"
 local Position = require "position"
 local V = require "values"
 
@@ -11,6 +13,7 @@ Ship.__index = Ship
 -- so that an instance can be created
 -- by Ship()
 setmetatable(Ship, {
+  __index = O,
   __call = function (cls, ...)
     local self = setmetatable({}, cls)
     self:_init(...)
@@ -19,6 +22,7 @@ setmetatable(Ship, {
 })
 
 function Ship._init(self, options)
+  O._init(self, options)
   self.speedmin, self.speedmax = 5, 12
   self.scalemin, self.scalemax = 0.4, 0.6
   self.diversion = options.diversion or math.rad(8)
@@ -89,23 +93,6 @@ function Ship.slowdown(self)
   if (self.scale < self.scalemax) then
     self.scale = self.scale + 0.01
   end
-end
-
-function Ship.moveByKeys(self)
-  local keydown = love.keyboard.isDown
-  if keydown("up") then self:moveUp() end
-  if keydown("down") then self:moveDown() end
-  if keydown("left") then self:moveLeft() end
-  if keydown("right") then self:moveRight() end
-end
-
-function Ship.listenToReleasedKeys(self, key)
-  if key == 'left' or key == 'right' then
-    self.direction = 0
-  end
-end
-
-function Ship.listenToPressedKeys(self, key)
 end
 
 function Ship.draw(self)

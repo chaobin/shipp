@@ -1,5 +1,6 @@
 -- imported names
 local BaseEnemy = require "enemies.base"
+local V = require "values"
 
 --
 -- E1 ship class definition
@@ -16,8 +17,17 @@ setmetatable(E1, {
 })
 
 function E1._init(self, options)
+  local options = options or {}
+  
+  options.imgs = options.imgs or  {
+    image = 'img/spaceride.png'
+  }
+  options.direction = options.direction or V.down
+  options.position = options.position or self:makeStartPosition()
+  options.scale = options.scale or 0.2
+  options.speed = options.speed or 2
+  
   BaseEnemy._init(self, options)
 end
-
 
 return E1

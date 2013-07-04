@@ -24,6 +24,11 @@ function Enemy.setSpeed(self, speed)
   self.speed = 1
 end
 
+function Enemy.makeStartPosition(self)
+  -- return {x, y}
+  return {x=100, y=100}
+end
+
 function Enemy.move(self)
   self.position:moveX(self.speed)
   self.position:moveY(self.speed)

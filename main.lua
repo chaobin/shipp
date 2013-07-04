@@ -1,45 +1,16 @@
 -- imported names
 local Alex = require "players.alex"
 local E1 = require "enemies.e1"
-local Background = require "background"
+local Tristar = require "backgrounds.tristar"
 local V = require "values"
 
 
 function love.load()
   local grph = love.graphics
 
-  bg = Background({
-    img = 'img/tristar.png',
-    speed = 0.5
-  })
-
-  player = Alex({
-    imgs = {
-      image = 'img/spaceride.png'
-    }
-  })
-  
-  enemies = {
-    enemy = E1({
-      imgs = {
-        image = 'img/spaceride.png'
-      },
-      direction = V.down,
-      position = {x=500, y=100},
-      scale = 0.2,
-      speed = 2
-    }),
-  
-    enemy2 = E1({
-      imgs = {
-        image = 'img/spaceride.png'
-      },
-      direction = V.down,
-      position = {x=300, y=80},
-      scale = 0.2,
-      speed = 1
-    })
-  }
+  bg = Tristar()
+  player = Alex()
+  enemies = {E1(), E1()}
 
   grph.setBackgroundColor(V.black)
   grph.setColor(V.blue)
