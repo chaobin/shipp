@@ -10,8 +10,10 @@ function love.load()
 
   bg = Tristar()
   player = Alex()
-  enemies = {E1(), E1()}
-
+  enemies = {}
+  for i=1, 10 do
+    table.insert(enemies, E1())
+  end
   grph.setBackgroundColor(V.black)
   grph.setColor(V.blue)
   grph.setFont(V.fontbig)

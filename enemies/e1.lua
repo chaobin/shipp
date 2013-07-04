@@ -23,11 +23,14 @@ function E1._init(self, options)
     image = 'img/spaceride.png'
   }
   options.direction = options.direction or V.down
-  options.position = options.position or self:makeStartPosition()
   options.scale = options.scale or 0.2
   options.speed = options.speed or 2
   
   BaseEnemy._init(self, options)
+end
+
+function E1.setSpeed(self, speed)
+  self.speed = math.random(2)
 end
 
 return E1

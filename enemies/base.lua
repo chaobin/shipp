@@ -1,5 +1,6 @@
 -- Imported names
 local Ship = require "ship"
+local Position = require "position"
 
 --
 -- Enemy base class
@@ -18,20 +19,33 @@ setmetatable(Enemy, {
 
 function Enemy._init(self, options)
   Ship._init(self, options)
+  self:calcStartPosition(options.position)
+  self:calcTurning(options.turning)
 end
 
 function Enemy.setSpeed(self, speed)
   self.speed = 1
 end
 
-function Enemy.makeStartPosition(self)
-  -- return {x, y}
-  return {x=100, y=100}
+function Enemy.calcStartPosition(self, position)
+  self.startPosition = position or {
+    x = math.random(self.boundaries.x),
+    y = 0
+  }
+  self.position = Position(self.startPosition, self.boundaries)
 end
 
 function Enemy.move(self)
-  self.position:moveX(self.speed)
+  self.position:moveX(self.speed * self.turning)
   self.position:moveY(self.speed)
+end
+
+function Enemy.calcTurning(self, turning)
+  if turning then
+    self.turning = turning
+  else
+    self.turning = ({-1, 0, 1})[math.random(3)]
+  end
 end
 
 function Enemy.update(self, dt)

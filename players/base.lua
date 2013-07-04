@@ -1,5 +1,6 @@
 -- imported names
 local Ship = require "ship"
+local Position = require "position"
 
 --
 -- Base class for all battle ship variants
@@ -18,6 +19,15 @@ setmetatable(PlayerShip, {
 
 function PlayerShip._init(self, options)
   Ship._init(self, options)
+  self:calcStartPosition(options.position)
+end
+
+function PlayerShip.calcStartPosition(self, position)
+  self.startPosition = position or {
+    x = math.random(self.boundaries.x),
+    y = self.boundaries.y
+  }
+  self.position = Position(self.startPosition, self.boundaries)
 end
 
 function PlayerShip.moveByKeys(self)

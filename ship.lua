@@ -39,11 +39,6 @@ function Ship._init(self, options)
     x = (self.window.x - self.size.w / 2),
     y = (self.window.y - self.size.h / 2)
   }
-  self.startPosition = options.position or {
-    x = math.random(self.boundaries.x),
-    y = self.boundaries.y
-  }
-  self.position = Position(self.startPosition, self.boundaries)
 end
 
 function Ship.setSpeed(self, speed)
