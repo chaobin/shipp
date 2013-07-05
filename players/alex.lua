@@ -27,7 +27,7 @@ function Alex._init(self, options)
 end
 
 function Alex.isHit(self)
-  self.hp = self.hp - 1
+  self.hp = self.hp - 0.2
 end
 
 function Alex.destroy(self)

@@ -53,6 +53,9 @@ function TristarInvader.load( self, ... )
 end
 
 function TristarInvader.update( self, dt )
+  if self.player:isDead() then
+    self.currentScene = self.koscene
+  end
   self.currentScene:next(dt)
   self.player:update(dt)
   for index, enemy in pairs(self.enemies) do
@@ -65,11 +68,8 @@ function TristarInvader.update( self, dt )
 end
 
 function TristarInvader.draw( self, ...)
-  if self.player:isDead() then
-    self.currentScene = self.koscene
-    self.currentScene:play()
-  else
-    self.currentScene:play()
+  self.currentScene:play()
+  if not self.player:isDead() then
     self.player:draw()
     for index, enemy in pairs(self.enemies) do
       enemy:draw()
