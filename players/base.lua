@@ -24,6 +24,22 @@ function PlayerShip._init(self, options)
   self:calcStartPosition(options.position)
 end
 
+function PlayerShip.update(self, dt)
+  self:moveByKeys()
+end
+
+function PlayerShip.keyreleased(self, key)
+  if key == 'left' or key == 'right' then
+    self.direction = 0
+  end
+end
+
+function PlayerShip.keypressed(self, key)
+  if key == " " then
+    self:fire()
+  end
+end
+
 function PlayerShip.moveDown(self)
   -- returns a new position
   self:slowdown()
@@ -61,17 +77,7 @@ function PlayerShip.moveByKeys(self)
   if keydown("right") then self:moveRight() end
 end
 
-function PlayerShip.keyreleased(self, key)
-  if key == 'left' or key == 'right' then
-    self.direction = 0
-  end
-end
-
-function PlayerShip.keypressed(self, key)
-end
-
-function PlayerShip.update(self, dt)
-  self:moveByKeys()
+function PlayerShip.fire(self)
 end
 
 return PlayerShip

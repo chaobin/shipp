@@ -17,7 +17,7 @@ function love.update(dt)
 end
 
 function love.keypressed(key, unicode)
-  stage:keypressed(key, unicode)
+  stage:keypressed(key)
 end
 
 function love.keyreleased(key)

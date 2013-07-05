@@ -13,46 +13,46 @@ TristarInvader.__index = TristarInvader
 
 setmetatable(TristarInvader, {
   __index = BaseStage,
-  __call = function ( cls, ... )
+  __call = function(cls, ...)
     local self = setmetatable({}, cls)
     self:_init(...)
     return self
   end
 })
 
-function TristarInvader._init( self, ... )
+function TristarInvader._init(self, ...)
   self.tristarscene = nil
   self.koscene = nil
   self.enemies = {}
   self.player = nil
 end
 
-function TristarInvader.loadScenes( self, ... )
+function TristarInvader.loadScenes(self, ...)
   self.tristarscene = TristarScene()
   self.koscene = KOScene()
   -- set the current scene
   self.currentScene = self.tristarscene
 end
 
-function TristarInvader.loadPlayer( self, ... )
+function TristarInvader.loadPlayer(self, ...)
   -- load player
   self.player = Alex()
 end
 
-function TristarInvader.loadEnemies ( self, ... )
+function TristarInvader.loadEnemies(self, ...)
   for i=1, 10 do
     local e = E1()
     table.insert(self.enemies, e)
   end
 end
 
-function TristarInvader.load( self, ... )
+function TristarInvader.load(self, ...)
   self:loadScenes()
   self:loadPlayer()
   self:loadEnemies()
 end
 
-function TristarInvader.update( self, dt )
+function TristarInvader.update(self, dt)
   if self.player:isDead() then
     self.currentScene = self.koscene
   end
@@ -67,7 +67,7 @@ function TristarInvader.update( self, dt )
   end
 end
 
-function TristarInvader.draw( self, ...)
+function TristarInvader.draw(self, ...)
   self.currentScene:play()
   if not self.player:isDead() then
     self.player:draw()
@@ -77,9 +77,13 @@ function TristarInvader.draw( self, ...)
   end
 end
 
-function TristarInvader.keyreleased( self, key )
+function TristarInvader.keyreleased(self, key)
   -- body
   self.player:keyreleased(key)
+end
+
+function TristarInvader.keypressed(self, key)
+  self.player:keypressed(key)
 end
 
 return TristarInvader

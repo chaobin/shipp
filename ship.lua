@@ -108,11 +108,7 @@ function Ship.destroy(self)
 end
 
 function Ship.draw(self)
-  if self:isDead() then
-    self:destroy()
-  else
-    grph.draw(self.image, self.position.x, self.position.y, self.direction)
-  end
+  grph.draw(self.image, self.position.x, self.position.y, self.direction)
 end
 
 function Ship.update(self, dt)
