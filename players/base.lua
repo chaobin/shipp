@@ -47,7 +47,7 @@ end
 
 function PlayerShip.calcStartPosition(self, position)
   self.startPosition = position or {
-    x = math.random(self.boundaries.x),
+    x = self.boundaries.x / 2, -- always comes out in the middle
     y = self.boundaries.y
   }
   self.position = Position(self.startPosition, self.boundaries)
@@ -61,13 +61,13 @@ function PlayerShip.moveByKeys(self)
   if keydown("right") then self:moveRight() end
 end
 
-function PlayerShip.listenToReleasedKeys(self, key)
+function PlayerShip.keyreleased(self, key)
   if key == 'left' or key == 'right' then
     self.direction = 0
   end
 end
 
-function PlayerShip.listenToPressedKeys(self, key)
+function PlayerShip.keypressed(self, key)
 end
 
 function PlayerShip.update(self, dt)
