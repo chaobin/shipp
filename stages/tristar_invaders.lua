@@ -36,7 +36,9 @@ end
 
 function TristarInvader.loadPlayer(self, ...)
   -- load player
-  self.player = Alex()
+  self.player = Alex({
+    enemies = self.enemies
+  })
 end
 
 function TristarInvader.loadEnemies(self, ...)

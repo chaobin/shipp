@@ -45,9 +45,7 @@ end
 function Weapon.draw(self)
 end
 
-function Weapon.fire(self, position, ...)
-  -- param position: shooting position
-  --  usually the ship position
+function Weapon.fire(self, enemies)
 end
 
 return Weapon

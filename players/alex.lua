@@ -26,8 +26,8 @@ function Alex._init(self, options)
     image = 'img/spaceride.png'
   }
   options.hp = options.hp or 10
-  options.damage = options.damage or 0.05
-  options.defense = options.defense or 0.02
+  options.damage = options.damage or 0.2
+  options.defense = options.defense or 0.1
   -- set machine gun as default weapon
   options.weapon = MachineGun({
     ship = self

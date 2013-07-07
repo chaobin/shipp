@@ -37,7 +37,7 @@ end
 
 function PlayerShip.keypressed(self, key)
   if key == " " then
-    self:fire()
+    self:fire(self.enemies)
   end
 end
 

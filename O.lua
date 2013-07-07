@@ -25,6 +25,19 @@ function O.mergeOptions(self, first, second)
   return results
 end
 
+function O.calcRadius(self)
+  -- rectangle shaped only
+  self.rad = math.max(self.size.w, self.size.h) / 2
+end
+
+function O.calcCenter(self)
+  self.center = {
+    x = (self.position.x + self.size.w / 2),
+    y = (self.position.y + self.size.h / 2)
+  }
+  return self.center
+end
+
 function O.collidesWith(self, body)
   local dx = body.position.x - self.position.x
   local dy = body.position.y - self.position.y

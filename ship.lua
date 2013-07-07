@@ -23,8 +23,8 @@ setmetatable(Ship, {
 
 function Ship._init(self, options)
   O._init(self, options)
+
   -- speed, images, geometries
-  
   self.image = grph.newImage(options.imgs.image)
   self.speedmin, self.speedmax = 5, 12
   self:setSpeed(options.speed)
@@ -42,6 +42,7 @@ function Ship._init(self, options)
 
   --
   -- gameplays
+  self.enemies = options.enemies or nil
 
   -- initial hp
   self.hp = options.hp or 0
@@ -55,19 +56,6 @@ function Ship._init(self, options)
   if options.weapon then
     self:addWeapon(options.weapon)
   end
-end
-
-function Ship.calcRadius(self)
-  -- rectangle shaped only
-  self.rad = math.max(self.size.w, self.size.h) / 2
-end
-
-function Ship.calcCenter(self)
-  self.center = {
-    x = (self.position.x + self.size.w / 2),
-    y = (self.position.y + self.size.h / 2)
-  }
-  return self.center
 end
 
 -- Moving controls

@@ -27,6 +27,7 @@ function Position.new(xy, XY)
   self.y = xy.y
   self.X = XY.x
   self.Y = XY.y
+  self.out = false
   return self
 end
 
@@ -41,9 +42,13 @@ end
 function Position.setX(self, x)
   -- param x: the new position on x axis
   if x <= 0 then
+    self.out = true
     x = 0
   elseif x >= self.X then
+    self.out = true
     x = self.X
+  else
+    self.out = false
   end
   self.x = x
 end
@@ -51,9 +56,13 @@ end
 function Position.setY(self, y)
   -- param y: the new position on y axis
   if y <= 0 then
+    self.out = true
     y = 0
   elseif y >= self.Y then
+    self.out = true
     y = self.Y
+  else
+    self.out = false
   end
   self.y = y
 end
