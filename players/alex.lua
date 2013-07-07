@@ -2,6 +2,7 @@
 local BasePlayer = require "players.base"
 local V = require "values"
 local grph = love.graphics
+local MachineGun = require "weapons.machine_gun"
 
 --
 -- Alex Ship Class
@@ -18,51 +19,20 @@ setmetatable(Alex, {
 })
 
 function Alex._init(self, options)
+  self._base = BasePlayer
   local options = options or {}
   
   options.imgs = options.imgs or {
     image = 'img/spaceride.png'
   }
   options.hp = options.hp or 10
-  BasePlayer._init(self, options)
-
-  self.bullets = {}
-end
-
-function Alex.isHit(self)
-  self.hp = self.hp - 0.2
-end
-
-function Alex.destroy(self)
-  self:calcCenter()
-  grph.circle("line", self.center.x, self.center.y, self.rad * 3, 100)
-end
-
-function Alex.fire(self)
-  self:calcCenter()
-  print(self.position.x, self.position.y)
-  local bullet = {
-    x = self.center.x,
-    y = self.position.y - 10
-  }
-  table.insert(self.bullets, bullet)
-end
-
-function Alex.update(self, dt)
-  BasePlayer.update(self, dt)
-  for i, bullet in pairs(self.bullets) do
-    bullet.y = bullet.y - 10
-  end
-end
-
-function Alex.draw(self)
-  BasePlayer.draw(self)
-  local oldColor = {grph.getColor()}
-  grph.setColor(V.red)
-  for i, bullet in pairs(self.bullets) do
-    grph.circle("fill", bullet.x, bullet.y, 2)
-  end
-  grph.setColor(oldColor)
+  options.damage = options.damage or 0.05
+  options.defense = options.defense or 0.02
+  -- set machine gun as default weapon
+  options.weapon = MachineGun({
+    ship = self
+  })
+  self._base._init(self, options)
 end
 
 return Alex

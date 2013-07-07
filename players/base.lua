@@ -25,6 +25,7 @@ function PlayerShip._init(self, options)
 end
 
 function PlayerShip.update(self, dt)
+  self._base.update(self, dt)
   self:moveByKeys()
 end
 
@@ -39,6 +40,8 @@ function PlayerShip.keypressed(self, key)
     self:fire()
   end
 end
+
+-- moving controls
 
 function PlayerShip.moveDown(self)
   -- returns a new position
@@ -77,7 +80,6 @@ function PlayerShip.moveByKeys(self)
   if keydown("right") then self:moveRight() end
 end
 
-function PlayerShip.fire(self)
-end
+-- Weapons
 
 return PlayerShip

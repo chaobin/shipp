@@ -1,3 +1,6 @@
+-- imported names
+local grph = love.graphics
+
 --
 -- the position class
 local Position = {}
@@ -11,11 +14,15 @@ setmetatable(Position, {
   end
 })
 
+local window = {x=grph.getWidth(), y=grph.getHeight()}
+
 function Position.new(xy, XY)
   -- params xy: table initial x and y
   -- params XY: table 0 <= x <= X
   --                  0 <= y <= Y
   local self = setmetatable({}, Position)
+  -- the object boundary defaults to window
+  local XY = XY or window
   self.x = xy.x
   self.y = xy.y
   self.X = XY.x
