@@ -61,9 +61,14 @@ function TristarInvader.update(self, dt)
   self.currentScene:next(dt)
   self.player:update(dt)
   for index, enemy in pairs(self.enemies) do
+    -- remove the dead enemies
+    if enemy:isDead() then
+      table.remove(self.enemies, index)
+    else
     -- check any collisions
-    if self.player:collidesWith(enemy) then
-      self.player:isHit()
+      if self.player:collidesWith(enemy) then
+        self.player:isHit()
+      end
     end
     enemy:update(dt)
   end

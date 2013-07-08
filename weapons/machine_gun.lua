@@ -60,7 +60,7 @@ function MachineGun._init(self, options)
   self.bulletSize = 2
   self.speed = 10
   self.rate = 2
-  self.power = 0.02
+  self.power = 1
 
   self.bullets = {}
 end
@@ -109,7 +109,7 @@ function MachineGun.update(self, dt)
     end
   end
   for i, bullet in pairs(self.bullets) do
-    if bullet.done or bullet.position.out then
+    if bullet.done or bullet.position:out() then
       table.remove(self.bullets, i) -- IMPORTANT! table.remove is CPU hungry
     else
       local move = self:calcBulletPosition()
@@ -125,9 +125,7 @@ function MachineGun.draw(self)
   for i, bullet in pairs(self.bullets) do
     -- draw the bullets into little filled
     -- circles
-    if not bullet.position.out then
-      grph.circle("fill", (bullet.position.x + self.bulletSize), bullet.position.y, self.bulletSize)
-    end
+    grph.circle("fill", (bullet.position.x + self.bulletSize), bullet.position.y, self.bulletSize)
   end
   grph.setColor(oldColor)
 end
