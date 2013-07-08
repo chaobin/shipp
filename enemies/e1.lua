@@ -22,14 +22,10 @@ function E1._init(self, options)
   options.imgs = options.imgs or  {
     image = 'img/e1_32.png'
   }
-  options.speed = options.speed or 2
+  options.speed = options.speed or 1
   
   options.hp = options.hp or 1
   BaseEnemy._init(self, options)
-end
-
-function E1.setSpeed(self, speed)
-  self.speed = math.random(2)
 end
 
 return E1

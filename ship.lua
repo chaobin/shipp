@@ -104,7 +104,6 @@ function Ship.isHit(self, damage)
   if self:isDead() then
     self:dies()
   else
-    print('damage: ' .. damage)
     local damage = damage or self.damage
     local damage = (damage - self.defense)
     self.hp = self.hp - damage
