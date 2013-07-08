@@ -107,7 +107,6 @@ function Ship.isHit(self, damage)
     local damage = damage or self.damage
     local damage = (damage - self.defense)
     self.hp = self.hp - damage
-    print('hp: ' .. self.hp)
   end
 end
 

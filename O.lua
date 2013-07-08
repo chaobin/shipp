@@ -39,8 +39,10 @@ function O.calcCenter(self)
 end
 
 function O.collidesWith(self, body)
-  local dx = body.position.x - self.position.x
-  local dy = body.position.y - self.position.y
+  self:calcCenter()
+  body:calcCenter()
+  local dx = body.center.x - self.center.x
+  local dy = body.center.y - self.center.y
   local dis = math.sqrt(dx * dx + dy * dy)
   return dis < (self.rad + body.rad)
 end
